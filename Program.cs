@@ -35,7 +35,7 @@ namespace Plagiat
                 }
                 else
                 {
-                    Console.WriteLine("{0} nie jest prawidłową ścieżką.", startupPath);
+                    Console.WriteLine("{0} is not a valid path.", startupPath);
                 }
 
                 WriteWordsCountWithPercents(workWords);
@@ -59,7 +59,7 @@ namespace Plagiat
             }
             else
             {
-                Console.WriteLine("Nie odnaleziono pliku WorkFile.txt");
+                Console.WriteLine("WorkFile.txt not found");
             }
 
             Console.ReadKey();
@@ -76,9 +76,9 @@ namespace Plagiat
             var normalizedStr = builder.ToString();
 
             int wholeLength = normalizedStr.Split(' ').Length;
-            Console.WriteLine("Ilość wyrazów w pracy: {0}", wholeLength);
+            Console.WriteLine("Words in WorkFile.txt: {0}", wholeLength);
             Console.WriteLine();
-            Console.WriteLine("Progi procentowe:");
+            Console.WriteLine("Plagiarism groups:");
 
             var lastlength = wholeLength;
             foreach(var i in searchGroups)
@@ -95,7 +95,7 @@ namespace Plagiat
 
         public static void WritePercentMatchString(int number, int workLength, int matches, int length, int selfLength)
         {
-            Console.WriteLine("{1} wyrazowe powtórzenia: {0} -- {2}% ({3}%)",
+            Console.WriteLine("{1} word repetitions: {0} -- {2}% ({3}%)",
                 matches,
                 number,
                 (float)length * 100 / workLength,
@@ -124,7 +124,7 @@ namespace Plagiat
         {
             (var badDates, var goodDates) = TxtReader.FindBadDateSpaces(str);
             Console.WriteLine();
-            Console.WriteLine("Ilość złych opisów źródeł {0} na {1} dobrych", badDates.Count, goodDates.Count);
+            Console.WriteLine("Number of bad date descriptions {0} out of {1}", badDates.Count, goodDates.Count + badDates.Count);
             foreach(Match match in badDates)
             {
                 Console.WriteLine(match.ToString());
@@ -136,12 +136,12 @@ namespace Plagiat
         {
             (MatchCollection matches, int wordCount, int wholeStringWordCount) = TxtReader.CheckQuotes(str);
             Console.WriteLine();
-            Console.WriteLine("Ilość cytatów: {0} -- {1}%", matches.Count, (wordCount * 100) / wholeStringWordCount);
+            Console.WriteLine("Number of quotes: {0} -- {1}%", matches.Count, (wordCount * 100) / wholeStringWordCount);
             int i = 0;
             foreach(Match match in matches)
             {
                 i++;
-                Console.WriteLine("Cytat {0}: {1}", i, match);
+                Console.WriteLine("Quote {0}: {1}", i, match);
             }
             Console.WriteLine();
         }
@@ -155,7 +155,7 @@ namespace Plagiat
                     TxtReader.ExtractTextFromPdfToTxt(pdfName, targetDirectory);
 
             fileEntries = Directory.GetFiles(targetDirectory, "*.txt");
-            Console.WriteLine("Załadowane źródła: " + fileEntries.Length);
+            Console.WriteLine("Number of loaded sources: " + fileEntries.Length);
             Console.WriteLine();
             foreach(var fileName in fileEntries)
             {
